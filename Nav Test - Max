@@ -1,0 +1,62 @@
+from Tkinter import *
+
+def screen(frame):
+    """raises chosen frame to screen"""
+    frame.tkraise()
+   
+def home_screen():
+    """creates navigation buttons on home frame and sets buttons to call required frame"""
+    Label(home, text="Home screen").pack()
+    Button(home, text="theory", command=lambda:screen(theory)).pack()
+    Button(home, text="vel", command=lambda:screen(vel)).pack()
+    Button(home, text="phase", command=lambda:screen(phase)).pack()
+    Button(home, text="quiz", command=lambda:screen(quiz)).pack()
+
+def theory_screen():
+    """creates navigation buttons on theory frame and sets buttons to call required frame"""
+    Label(theory, text="theory screen").pack()
+    Button(theory, text="back", command=lambda:screen(home)).pack(side=LEFT)
+    Button(theory, text="home", command=lambda:screen(home)).pack(side=LEFT)
+    Button(theory, text="next", command=lambda:screen(vel)).pack(side=LEFT)
+
+def vel_screen():
+    """creates navigation buttons on velocity and acceleration frame sets buttons to call required frame"""
+    Label(vel, text="Velocity and Acceleration").pack()
+    Button(vel, text="back", command=lambda:screen(theory)).pack(side=LEFT)
+    Button(vel, text="home", command=lambda:screen(home)).pack(side=LEFT)
+    Button(vel, text="next", command=lambda:screen(phase)).pack(side=LEFT)
+
+def phase_screen():
+    """creates navigation buttons on phase frame and sets buttons to call required frame"""
+    Label(phase, text="phase screen").pack()
+    Button(phase, text="back", command=lambda:screen(vel)).pack(side=LEFT)
+    Button(phase, text="home", command=lambda:screen(home)).pack(side=LEFT)
+    Button(phase, text="next", command=lambda:screen(quiz)).pack(side=LEFT)
+
+def quiz_screen():
+    """creates navigation buttons on quiz frame and sets buttons to call required frame"""
+    Label(quiz, text="quiz").pack()
+    Button(quiz, text="back", command=lambda:screen(vel)).pack(side=LEFT)
+    Button(quiz, text="home", command=lambda:screen(home)).pack(side=LEFT)
+    
+#creates window, sets frames to variables
+root = Tk()
+
+home = Frame(root)
+theory = Frame(root)
+vel = Frame(root)
+phase = Frame(root)
+quiz = Frame(root)
+
+#packs frame onto screen using grid
+for frame in (home, theory, vel, phase, quiz):
+    frame.grid(row=0, column=0, sticky= "news")
+
+#calls functions with screen layout
+home_screen(), theory_screen(), vel_screen(), phase_screen(), quiz_screen()
+
+#calls home frame to surface
+screen(home)
+
+#loops over window
+root.mainloop()
