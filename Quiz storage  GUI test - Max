@@ -18,13 +18,25 @@ def quiz_packing(q1, q2, q3):
 
 def entry_packing():
     """creates 3 entry box for user to input answers and sets entered data to global variables"""
-    global answer_1
-    global answer_2
-    global answer_3
-    answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
-    answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
-    answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
-
+    global answer_1, answer_2, answer_3
+    global answer_dict
+    global load_check
+    if load_check == False:
+        answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
+        answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
+        answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
+    elif load_check == True:
+        print answer_dict
+        answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
+        #answer_1_entry.delete(0, END)
+        #answer_1_entry.insert(END, answer_dict['user_answer_1'])
+        answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
+        #answer_2_entry.delete(0, END)
+        #answer_2_entry.insert(END, answer_dict['user_answer_2'])
+        answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
+        #answer_3_entry.delete(0, END)
+        #answer_3_entry.insert(END, answer_dict['user_answer_3'])
+        load_check = False
     entry_frame.grid(row=1, column=1)
 
 def button_packing():
@@ -42,11 +54,19 @@ def save_quiz():
 
 def load_quiz():
     """loads the results of the quiz"""
-    ### currently broken
-    global answers_dict
-    answers_dict = pickle.load(open("quiz_test_results.txt", "rb"))
-    print answers_dict
+    global answer_dict
+    global load_check
+    global entry_frame
+    load_check = True
+    
+    answer_dict = pickle.load(open("quiz_test_results.txt", "rb"))
+    print answer_dict
     #print answers_dict.get('user_answer_1')
+    entry_frame.destroy()
+    print "destroyed"
+    entry_frame = Frame(root)
+    entry_packing()
+    
 
 def get_quiz():
     """gets answers from quiz and stors them to dictionary"""
@@ -61,6 +81,9 @@ def quit_():
 
 ### build the window
 root = Tk()
+
+### checks to see if items are loaded
+load_check = False
 
 ### sets variables from entry boxs
 answer_1 = StringVar()
