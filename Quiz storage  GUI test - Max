@@ -1,6 +1,5 @@
 from Tkinter import *
 import pickle
-
     
 def title_packing(input_title):
     """creates title and packs the title frame on to the root screen"""
@@ -27,6 +26,7 @@ def entry_packing():
         answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
     elif load_check == True:
         print answer_dict
+        ### broken
         answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
         #answer_1_entry.delete(0, END)
         #answer_1_entry.insert(END, answer_dict['user_answer_1'])
