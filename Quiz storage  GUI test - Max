@@ -1,0 +1,26 @@
+import pickle
+
+root = Tk()
+def title_packing():
+    title = Label(title_frame, text="Quiz").pack()
+    title_frame.pack()
+
+def quiz_packing():
+    question_1 = Label(quiz_frame, text="What is 2 + 3?").pack()
+    question_2 = Label(quiz_frame, text="What is 6 x 6?").pack()
+    question_3 = Label(quiz_frame, text="Does this work?").pack()
+
+    quiz_frame.pack()
+
+def button_packing():
+    save_button = Button(button_frame, text="Save").pack(side=LEFT)
+    load_button = Button(button_frame, text="Load").pack(side=LEFT)
+    quit_button = Button(button_frame, text="Quit").pack(side=LEFT)
+
+    button_frame.pack()
+    
+title_frame = Frame(root)
+quiz_frame = Frame(root)
+button_frame = Frame(root)
+
+title_packing()
