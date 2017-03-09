@@ -1,26 +1,48 @@
+from Tkinter import *
 import pickle
 
 root = Tk()
-def title_packing():
-    title = Label(title_frame, text="Quiz").pack()
-    title_frame.pack()
+def title_packing(input_title):
+    """creates title and packs the title frame on to the root screen"""
 
-def quiz_packing():
-    question_1 = Label(quiz_frame, text="What is 2 + 3?").pack()
-    question_2 = Label(quiz_frame, text="What is 6 x 6?").pack()
-    question_3 = Label(quiz_frame, text="Does this work?").pack()
+    title = Label(title_frame, text=input_title).pack()
 
-    quiz_frame.pack()
+    title_frame.grid(columnspan=2)
+
+def quiz_packing(q1, q2, q3):
+    
+    question_1 = Label(quiz_frame, text=q1).pack()
+    question_2 = Label(quiz_frame, text=q2).pack()
+    question_3 = Label(quiz_frame, text=q3).pack()
+
+    quiz_frame.grid(row=1)
+
+def entry_packing():
+    
+    answer_1 = Entry(entry_frame).pack()
+    answer_2 = Entry(entry_frame).pack()
+    answer_3 = Entry(entry_frame).pack()
+
+    entry_frame.grid(row=1, column=1)
 
 def button_packing():
+
     save_button = Button(button_frame, text="Save").pack(side=LEFT)
     load_button = Button(button_frame, text="Load").pack(side=LEFT)
     quit_button = Button(button_frame, text="Quit").pack(side=LEFT)
 
-    button_frame.pack()
-    
+    button_frame.grid(row=2, columnspan=2)
+
+
+   
 title_frame = Frame(root)
 quiz_frame = Frame(root)
+entry_frame = Frame(root)
 button_frame = Frame(root)
 
-title_packing()
+title_packing("Quiz")
+quiz_packing("What is 2 + 3?","What is 6 x 6?","Does this work?")
+entry_packing()
+button_packing()
+
+root.mainloop()
