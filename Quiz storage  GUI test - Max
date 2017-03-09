@@ -1,17 +1,23 @@
 from Tkinter import *
 import pickle
+
     
 def title_packing(input_title):
     """creates title and packs the title frame on to the root screen"""
-    title = Label(title_frame, text=input_title).pack()
-
+    title = Label(title_frame, text=input_title)
+    title.pack()
+    title.config(font=("Courier", 22))
     title_frame.grid(columnspan=2)
 
 def quiz_packing(q1, q2, q3):
     """creates 3 questions via admin input into function and packs them to the screen"""
-    question_1 = Label(quiz_frame, text=q1).pack()
-    question_2 = Label(quiz_frame, text=q2).pack()
-    question_3 = Label(quiz_frame, text=q3).pack()
+    question_1 = Label(quiz_frame, text=q1)
+    question_2 = Label(quiz_frame, text=q2)
+    question_3 = Label(quiz_frame, text=q3)
+
+    question_1.grid(sticky=E)
+    question_2.grid(sticky=E)
+    question_3.grid(sticky=E)
 
     quiz_frame.grid(row=1)
 
@@ -21,31 +27,46 @@ def entry_packing():
     global answer_dict
     global load_check
     if load_check == False:
-        answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
-        answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
-        answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
+        answer_1_entry = Entry(entry_frame, textvariable=answer_1)
+        answer_2_entry = Entry(entry_frame, textvariable=answer_2)
+        answer_3_entry = Entry(entry_frame, textvariable=answer_3)
+
+        answer_1_entry.pack()
+        answer_2_entry.pack()
+        answer_3_entry.pack()
+    ### -- checks to see if data needs to be loaded and clears/fills entry box's with data
     elif load_check == True:
-        print answer_dict
-        ### broken
-        answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
-        #answer_1_entry.delete(0, END)
-        #answer_1_entry.insert(END, answer_dict['user_answer_1'])
-        answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
-        #answer_2_entry.delete(0, END)
-        #answer_2_entry.insert(END, answer_dict['user_answer_2'])
-        answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
-        #answer_3_entry.delete(0, END)
-        #answer_3_entry.insert(END, answer_dict['user_answer_3'])
+        answer_1_entry = Entry(entry_frame, textvariable=answer_1)
+        answer_2_entry = Entry(entry_frame, textvariable=answer_2)
+        answer_3_entry = Entry(entry_frame, textvariable=answer_3)
+        
+        answer_1_entry.pack()
+        answer_2_entry.pack()        
+        answer_3_entry.pack()
+
+        answer_1_entry.delete(0, END)
+        answer_2_entry.delete(0, END)
+        answer_3_entry.delete(0, END)
+        
+        answer_1_entry.insert(END, answer_dict['user_answer_1'])
+        answer_2_entry.insert(END, answer_dict['user_answer_2'])
+        answer_3_entry.insert(END, answer_dict['user_answer_3'])
+
         load_check = False
+
     entry_frame.grid(row=1, column=1)
 
 def button_packing():
     """packs buttons to the screen"""
-    save_button = Button(button_frame, text="Save", command=save_quiz).pack(side=LEFT)
-    load_button = Button(button_frame, text="Load", command=load_quiz).pack(side=LEFT)
-    quit_button = Button(button_frame, text="Quit", command=quit_).pack(side=LEFT)
+    save_button = Button(button_frame, text="Save", command=save_quiz)
+    load_button = Button(button_frame, text="Load", command=load_quiz)
+    quit_button = Button(button_frame, text="Quit", command=quit_)
+    
+    save_button.grid(row=0, column=0, sticky=W)
+    load_button.grid(row=0, column=2)
+    quit_button.grid(row=0,column=4, sticky=E)
 
-    button_frame.grid(row=2, columnspan=2)
+    button_frame.grid(row=3, columnspan=3)
 
 def save_quiz():
     """saves the results from the quiz to "binary.txt" file"""
@@ -58,12 +79,10 @@ def load_quiz():
     global load_check
     global entry_frame
     load_check = True
-    
+
+    ### -- destroys current entry frame to replace with loaded text
     answer_dict = pickle.load(open("quiz_test_results.txt", "rb"))
-    print answer_dict
-    #print answers_dict.get('user_answer_1')
     entry_frame.destroy()
-    print "destroyed"
     entry_frame = Frame(root)
     entry_packing()
     
@@ -79,29 +98,30 @@ def quit_():
     save_quiz()
     root.destroy()
 
-### build the window
+### -- build the window
 root = Tk()
+root.title("Quiz")
 
-### checks to see if items are loaded
+### -- checks to see if items are loaded
 load_check = False
 
-### sets variables from entry boxs
+### -- sets variables from entry boxs
 answer_1 = StringVar()
 answer_2 = StringVar()
 answer_3 = StringVar()
 answer_dict = {}
 
-### sets frames on screen to insert widgets
+### -- sets frames on screen to insert widgets
 title_frame = Frame(root)
 quiz_frame = Frame(root)
 entry_frame = Frame(root)
 button_frame = Frame(root)
 
-### calls widgets to frames
+### -- calls widgets to frames
 title_packing("Quiz")
 quiz_packing("What is 2 + 3?","What is 6 x 6?","Does this work?")
 entry_packing()
 button_packing()
 
-### loops window
+### -- loops window
 root.mainloop()
