@@ -1,16 +1,15 @@
 from Tkinter import *
 import pickle
 
-root = Tk()
+    
 def title_packing(input_title):
     """creates title and packs the title frame on to the root screen"""
-
     title = Label(title_frame, text=input_title).pack()
 
     title_frame.grid(columnspan=2)
 
 def quiz_packing(q1, q2, q3):
-    
+    """creates 3 questions via admin input into function and packs them to the screen"""
     question_1 = Label(quiz_frame, text=q1).pack()
     question_2 = Label(quiz_frame, text=q2).pack()
     question_3 = Label(quiz_frame, text=q3).pack()
@@ -18,31 +17,68 @@ def quiz_packing(q1, q2, q3):
     quiz_frame.grid(row=1)
 
 def entry_packing():
-    
-    answer_1 = Entry(entry_frame).pack()
-    answer_2 = Entry(entry_frame).pack()
-    answer_3 = Entry(entry_frame).pack()
+    """creates 3 entry box for user to input answers and sets entered data to global variables"""
+    global answer_1
+    global answer_2
+    global answer_3
+    answer_1_entry = Entry(entry_frame, textvariable=answer_1).pack()
+    answer_2_entry = Entry(entry_frame, textvariable=answer_2).pack()
+    answer_3_entry = Entry(entry_frame, textvariable=answer_3).pack()
 
     entry_frame.grid(row=1, column=1)
 
 def button_packing():
-
-    save_button = Button(button_frame, text="Save").pack(side=LEFT)
-    load_button = Button(button_frame, text="Load").pack(side=LEFT)
-    quit_button = Button(button_frame, text="Quit").pack(side=LEFT)
+    """packs buttons to the screen"""
+    save_button = Button(button_frame, text="Save", command=save_quiz).pack(side=LEFT)
+    load_button = Button(button_frame, text="Load", command=load_quiz).pack(side=LEFT)
+    quit_button = Button(button_frame, text="Quit", command=quit_).pack(side=LEFT)
 
     button_frame.grid(row=2, columnspan=2)
 
+def save_quiz():
+    """saves the results from the quiz to "binary.txt" file"""
+    get_quiz()
+    pickle.dump(answer_dict, open("quiz_test_results.txt", "wb"))
 
-   
+def load_quiz():
+    """loads the results of the quiz"""
+    ### currently broken
+    global answers_dict
+    answers_dict = pickle.load(open("quiz_test_results.txt", "rb"))
+    print answers_dict
+    #print answers_dict.get('user_answer_1')
+
+def get_quiz():
+    """gets answers from quiz and stors them to dictionary"""
+    answer_dict['user_answer_1'] = answer_1.get()
+    answer_dict['user_answer_2'] = answer_2.get()
+    answer_dict['user_answer_3'] = answer_3.get()
+
+def quit_():
+    """quits program and saves automatically"""
+    save_quiz()
+    root.destroy()
+
+### build the window
+root = Tk()
+
+### sets variables from entry boxs
+answer_1 = StringVar()
+answer_2 = StringVar()
+answer_3 = StringVar()
+answer_dict = {}
+
+### sets frames on screen to insert widgets
 title_frame = Frame(root)
 quiz_frame = Frame(root)
 entry_frame = Frame(root)
 button_frame = Frame(root)
 
+### calls widgets to frames
 title_packing("Quiz")
 quiz_packing("What is 2 + 3?","What is 6 x 6?","Does this work?")
 entry_packing()
 button_packing()
 
+### loops window
 root.mainloop()
