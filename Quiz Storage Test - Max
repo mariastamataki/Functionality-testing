@@ -1,27 +1,47 @@
+from Tkinter import *
 import pickle
 
-def save_quiz():
-    """saves the results from the quiz"""
-    pickle.dump(quiz_dict, open("quiz_test.txt", "wb"))
+root = Tk()
+def title_packing():
 
-def load_quiz():
-    """loads the results from the quiz"""
-    answers = pickle.load(open("quiz_test.txt", "rb"))
-    print answers
+    title = Label(title_frame, text="Quiz").pack()
 
-#creates dictionary to store answers
-quiz_dict = {}
+    title_frame.grid(columnspan=2)
 
-#initiates quiz and saves file
-start = raw_input("Would you like to start quiz? y/n")
-if start == "y":
-    quiz_dict['answer_1'] = int(raw_input("What is 2 + 3?"))
-    quiz_dict['answer_2'] = int(raw_input("What 6 x 6?"))
-    quiz_dict['answer_3'] = raw_input("Does this work?")
+def quiz_packing():
+    
+    question_1 = Label(quiz_frame, text="What is 2 + 3?").pack()
+    question_2 = Label(quiz_frame, text="What is 6 x 6?").pack()
+    question_3 = Label(quiz_frame, text="Does this work?").pack()
 
-    save_quiz()
+    quiz_frame.grid(row=1)
 
-#initaiates loading of aswers
-load = raw_input("would you like to load answers? y/n")
-if load == "y":
-    load_quiz()
+def entry_packing():
+    
+    answer_1 = Entry(entry_frame).pack()
+    answer_2 = Entry(entry_frame).pack()
+    answer_3 = Entry(entry_frame).pack()
+
+    entry_frame.grid(row=1, column=1)
+
+def button_packing():
+
+    save_button = Button(button_frame, text="Save").pack(side=LEFT)
+    load_button = Button(button_frame, text="Load").pack(side=LEFT)
+    quit_button = Button(button_frame, text="Quit").pack(side=LEFT)
+
+    button_frame.grid(row=2, columnspan=2)
+
+
+   
+title_frame = Frame(root)
+quiz_frame = Frame(root)
+entry_frame = Frame(root)
+button_frame = Frame(root)
+
+title_packing()
+quiz_packing()
+entry_packing()
+button_packing()
+
+root.mainloop()
