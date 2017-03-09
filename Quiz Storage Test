@@ -1,0 +1,27 @@
+import pickle
+
+def save_quiz():
+    """saves the results from the quiz"""
+    pickle.dump(quiz_dict, open("quiz_test.txt", "wb"))
+
+def load_quiz():
+    """loads the results from the quiz"""
+    answers = pickle.load(open("quiz_test.txt", "rb"))
+    print answers
+
+#creates dictionary to store answers
+quiz_dict = {}
+
+#initiates quiz and saves file
+start = raw_input("Would you like to start quiz? y/n")
+if start == "y":
+    quiz_dict['answer_1'] = int(raw_input("What is 2 + 3?"))
+    quiz_dict['answer_2'] = int(raw_input("What 6 x 6?"))
+    quiz_dict['answer_3'] = raw_input("Does this work?")
+
+    save_quiz()
+
+#initaiates loading of aswers
+load = raw_input("would you like to load answers? y/n")
+if load == "y":
+    load_quiz()
