@@ -2,17 +2,18 @@ from Tkinter import *
 import pickle
 
 root = Tk()
-def title_packing():
+def title_packing(input_title):
+    """creates title and packs the title frame on to the root screen"""
 
-    title = Label(title_frame, text="Quiz").pack()
+    title = Label(title_frame, text=input_title).pack()
 
     title_frame.grid(columnspan=2)
 
-def quiz_packing():
+def quiz_packing(q1, q2, q3):
     
-    question_1 = Label(quiz_frame, text="What is 2 + 3?").pack()
-    question_2 = Label(quiz_frame, text="What is 6 x 6?").pack()
-    question_3 = Label(quiz_frame, text="Does this work?").pack()
+    question_1 = Label(quiz_frame, text=q1).pack()
+    question_2 = Label(quiz_frame, text=q2).pack()
+    question_3 = Label(quiz_frame, text=q3).pack()
 
     quiz_frame.grid(row=1)
 
@@ -39,8 +40,8 @@ quiz_frame = Frame(root)
 entry_frame = Frame(root)
 button_frame = Frame(root)
 
-title_packing()
-quiz_packing()
+title_packing("Quiz")
+quiz_packing("What is 2 + 3?","What is 6 x 6?","Does this work?")
 entry_packing()
 button_packing()
 
