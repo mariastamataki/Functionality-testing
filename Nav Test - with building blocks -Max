@@ -1,0 +1,157 @@
+### -- Imports Tkinter and tkk \\
+### -- ttk is used to update widgets to modern look
+
+from Tkinter import *
+import ttk
+
+### -- Creates window
+
+root = Tk()
+
+def screen_raise(screen):
+    """raises chosen frame to front of window"""
+    screen.tkraise()
+
+def title(screen, text_, font):
+    """creates title for page and allows to input information"""
+    title_frame = ttk.Frame(screen)
+    title_frame.grid(row=0, columnspan=3)
+
+    title = ttk.Label(title_frame, text=text_, font=font)
+    title.grid(row=0, column=1)
+
+    help_(title_frame)
+    save_load(title_frame)
+
+def nav_buttons(screen):
+    """creates navigation buttons to navigate between screens"""
+    nav_button_frame = ttk.Frame(screen)
+    nav_button_frame.grid(row=4,columnspan=3)
+    
+    back_button = ttk.Button(nav_button_frame, text="Back")
+    home_button = ttk.Button(nav_button_frame, text="Home",
+                             command=lambda:screen_raise(home_screen))
+    next_button = ttk.Button(nav_button_frame, text="Next")
+
+    back_button.grid(row=0, column=0)
+    home_button.grid(row=0, column=1)
+    next_button.grid(row=0, column=2)
+
+def intro_text(screen, text_):
+    """creates intro text to relevert screen beneath title"""
+    intro_text_frame = ttk.Frame(screen)
+    intro_text_frame.grid(row=1, columnspan=3)
+
+    intro_text = ttk.Label(intro_text_frame, text=text_)
+    intro_text.grid()
+
+    spacer(intro_text_frame, 1)
+
+def bulk_text(screen, text_):
+    """creates the bulk text for the screen"""
+    bulk_text_frame = ttk.Frame(screen)
+    bulk_text_frame.grid(row=2, column=0)
+
+    bulk_text = ttk.Label(bulk_text_frame, text=text_)
+    bulk_text.grid(row=0, column=0)
+
+def images(screen):
+    """creates frame to import images onto relevent screen"""
+    image_frame = ttk.Frame(screen)
+    image_frame.grid(row=2, column=1)
+
+    image = Canvas(image_frame, width=250, height=150, bg="white", bd=2)
+    image.grid(row=0, column=0)
+
+    execute(image_frame, 1)
+
+    spacer(image_frame, 2)
+
+def help_(screen):
+    """creates help button"""
+    help_button_frame = ttk.Frame(screen)
+    help_button_frame.grid(row=0, column=0)
+    
+    help_button = ttk.Button(help_button_frame, text="Help")
+    help_button.grid(row=0, column=0)
+
+def save_load(screen):
+    """creates save and load buttons"""
+    save_load_frame = ttk.Frame(screen)
+    save_load_frame.grid(row=0, column=2)
+    
+    save_button = ttk.Button(save_load_frame, text="save")
+    save_button.grid(row=0, column=0)
+
+    load_button = ttk.Button(save_load_frame, text="load")
+    load_button.grid(row=0, column=1)
+
+def execute(screen, row_):
+    """creates execute button for actions and functionalities"""
+    execute_button = Button(screen, text="execute")
+    execute_button.grid(row=row_)
+    
+def spacer(screen, row_):
+    """creates spacer to space out frames within screens"""
+    spacer = Label(screen)
+    spacer.grid(column=row_)
+
+def contents(screen):
+    """creates contents menu for home page"""
+    contents_frame = Frame(screen)
+    contents_frame.grid(row=2)
+
+    theory_button = ttk.Button(contents_frame, text="Theory",
+                               command=lambda:screen_raise(theory_screen))
+    velocity_button = ttk.Button(contents_frame, text="Velocity and Acceleration")
+    phase_button = ttk.Button(contents_frame, text="Phase relationship")
+    quiz_button = ttk.Button(contents_frame, text="Test yourself")
+
+    theory_label = ttk.Label(contents_frame, text="Some info on this topic",)
+    velocity_label = ttk.Label(contents_frame, text="Some info on this topic")
+    phase_label = ttk.Label(contents_frame, text="Some info on this topic")
+    quiz_label = ttk.Label(contents_frame, text="Some info on this topic")
+
+    x = 0
+    for button in (theory_button, velocity_button, phase_button, quiz_button):
+        button.grid(row=x, column=0)
+        x +=1
+
+    x = 0
+    for label in (theory_label, velocity_label, phase_label, quiz_label):
+        label.grid(row=x, column=1)
+        x += 1
+
+### -- List of fonts to use for text    
+
+LARGE_FONT = ("Verdana", 12)
+
+### -- List of screen frames
+
+home_screen = Frame(root)
+theory_screen = Frame(root)
+
+for screen in (home_screen, theory_screen):
+    screen.grid(row=0, column=0, sticky= "news")
+
+
+### -- Raises home screen to fromnt of page
+screen_raise(home_screen)
+
+### -- Creates home screen using functions above
+
+title(home_screen,"Home Page - Contents", LARGE_FONT)
+nav_buttons(home_screen)
+contents(home_screen)
+
+### -- Creates theory screen using functions above
+
+title(theory_screen,"Theroy Screen - Introduction to simple harmonic motion", LARGE_FONT)
+nav_buttons(theory_screen)
+intro_text(theory_screen, "Some basic text to introduce screen")
+bulk_text(theory_screen, "Bulk text for screen is to be displayed here.")
+images(theory_screen)
+
+### -- Loops over screen to update changes
+
+root.mainloop()
