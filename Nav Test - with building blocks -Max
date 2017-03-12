@@ -25,17 +25,45 @@ def title(screen, text_, font):
 
 def nav_buttons(screen):
     """creates navigation buttons to navigate between screens"""
+
+    back = 0
+    next_ = 0
+    
     nav_button_frame = ttk.Frame(screen)
     nav_button_frame.grid(row=4,columnspan=3)
-    
-    back_button = ttk.Button(nav_button_frame, text="Back")
+
+    ### -- checks screen to change button features to correct screens
+
+    if screen == theory_screen:
+        back = home_screen
+        next_ = vel_screen
+
+    elif screen == vel_screen:
+        back = theory_screen
+        next_ = phase_screen
+
+    elif screen == phase_screen:
+        back = vel_screen
+        next_ = test_screen
+
+    elif screen == test_screen:
+        back = phase_screen
+
+    back_button = ttk.Button(nav_button_frame, text="Back",
+                             command=lambda:screen_raise(back))
     home_button = ttk.Button(nav_button_frame, text="Home",
                              command=lambda:screen_raise(home_screen))
-    next_button = ttk.Button(nav_button_frame, text="Next")
+    next_button = ttk.Button(nav_button_frame, text="Next",
+                             command=lambda:screen_raise(next_))
 
     back_button.grid(row=0, column=0)
     home_button.grid(row=0, column=1)
     next_button.grid(row=0, column=2)
+
+    if screen == home_screen:
+        back_button.grid_remove()
+        home_button.grid_remove()
+        next_button.grid_remove()
 
 def intro_text(screen, text_):
     """creates intro text to relevert screen beneath title"""
@@ -88,24 +116,27 @@ def save_load(screen):
 
 def execute(screen, row_):
     """creates execute button for actions and functionalities"""
-    execute_button = Button(screen, text="execute")
+    execute_button = ttk.Button(screen, text="execute")
     execute_button.grid(row=row_)
     
 def spacer(screen, row_):
     """creates spacer to space out frames within screens"""
-    spacer = Label(screen)
+    spacer = ttk.Label(screen)
     spacer.grid(column=row_)
 
 def contents(screen):
     """creates contents menu for home page"""
-    contents_frame = Frame(screen)
+    contents_frame = ttk.Frame(screen)
     contents_frame.grid(row=2)
 
     theory_button = ttk.Button(contents_frame, text="Theory",
                                command=lambda:screen_raise(theory_screen))
-    velocity_button = ttk.Button(contents_frame, text="Velocity and Acceleration")
-    phase_button = ttk.Button(contents_frame, text="Phase relationship")
-    quiz_button = ttk.Button(contents_frame, text="Test yourself")
+    velocity_button = ttk.Button(contents_frame, text="Velocity and Acceleration",
+                                 command=lambda:screen_raise(vel_screen))
+    phase_button = ttk.Button(contents_frame, text="Phase relationship",
+                              command=lambda:screen_raise(phase_screen))
+    quiz_button = ttk.Button(contents_frame, text="Test yourself",
+                             command=lambda:screen_raise(test_screen))
 
     theory_label = ttk.Label(contents_frame, text="Some info on this topic",)
     velocity_label = ttk.Label(contents_frame, text="Some info on this topic")
@@ -130,12 +161,18 @@ LARGE_FONT = ("Verdana", 12)
 
 home_screen = Frame(root)
 theory_screen = Frame(root)
+vel_screen = Frame(root)
+phase_screen = Frame(root)
+test_screen = Frame(root)
 
-for screen in (home_screen, theory_screen):
+
+### -- Packs screens on top of each other
+
+for screen in (home_screen, theory_screen, vel_screen, phase_screen, test_screen):
     screen.grid(row=0, column=0, sticky= "news")
 
-
 ### -- Raises home screen to fromnt of page
+
 screen_raise(home_screen)
 
 ### -- Creates home screen using functions above
@@ -150,6 +187,32 @@ title(theory_screen,"Theroy Screen - Introduction to simple harmonic motion", LA
 nav_buttons(theory_screen)
 intro_text(theory_screen, "Some basic text to introduce screen")
 bulk_text(theory_screen, "Bulk text for screen is to be displayed here.")
+images(theory_screen)
+
+### -- Creates velocity and acceleration page
+
+title(vel_screen,"Velocity and Acceleration - How does velocity and acceleration change in SMH", LARGE_FONT)
+nav_buttons(vel_screen)
+intro_text(vel_screen, "Some basic text to introduce screen")
+bulk_text(vel_screen, "Bulk text for screen is to be displayed here.")
+images(vel_screen)
+
+### -- Creates Phase shift screen
+
+title(phase_screen,"Phase shift - How does phase shift change SMH", LARGE_FONT)
+nav_buttons(phase_screen)
+intro_text(phase_screen, "Some basic text to introduce screen")
+bulk_text(phase_screen, "Bulk text for screen is to be displayed here.")
+images(phase_screen)
+
+### -- Creates quiz screens
+
+title(test_screen,"Quiz shift - test yourself", LARGE_FONT)
+nav_buttons(test_screen)
+intro_text(test_screen, "Some basic text to introduce screen")
+bulk_text(test_screen, "Bulk text for screen is to be displayed here.")
+
+
 images(theory_screen)
 
 ### -- Loops over screen to update changes
