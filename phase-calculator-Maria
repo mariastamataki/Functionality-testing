@@ -1,0 +1,36 @@
+import math
+
+A=raw_input("Amplitute: ")  ##We need to make sure that the amplitute is a number.
+A_digit = A.replace('.','')
+if A_digit.isdigit(): 
+    A=float(A)
+    o=raw_input("Angular Velocity: ")   ##We need to make sure that the angular velocity is a number.
+    o_digit = o.replace('.','')
+    if o_digit.isdigit():
+        o=float(o)
+        ti=raw_input("Time: ")  ##We need to make sure that time is a number.
+        ti_digit = ti.replace('.','')
+        if ti_digit.isdigit(): 
+            ti=float(ti)
+            p=raw_input("Phase: ")  ##We need to make sure that phase is a number.
+            p_digit = p.replace('.','')
+            if p_digit.isdigit():
+                p=float(p)
+                y=A*math.sin(math.radians(o*ti+p))
+                print "YOUR INPUTS WERE: "
+                print "A = ", A
+                print "ang. vel. = ", o
+                print "t = ", ti
+                print "ph = ", p
+                print "So from the equation of the simple harmonic motion \n\n\t(y=A*sin(o*t+f))\n\ny is equal to: " , y
+                
+            else:
+                print "ERROR, please try again."
+        else:
+            print "ERROR, please try again."
+    else:
+        print "ERROR, please try again."
+else:
+    print "ERROR1, please try again."
+##Due to the fact that pi as a number is not recognized a button on GUI will be available a button so that users can put the number.
+
