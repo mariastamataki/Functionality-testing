@@ -1,0 +1,54 @@
+#Quiz 1
+#import answer.py
+from answer import *
+answer_init()
+answer_load()
+
+
+#the question sentense 1 is shown up
+print "A body ocscilates with a frequency of 2Hz. What is its maximum vlocity in m/s?"
+
+# User enters the answer
+answer_1 = 0
+while answer_1 != 2.51 :
+    answer_1 = raw_input("Enter your answer : ").lower()
+    answer_set("user_answer_1", answer_1)
+
+# replaces '.' in returned string with nothing
+    ans_1_digit = answer_1.replace('.','').isdigit()
+    print ans_1_digit
+
+#checks to see if user input is a digit if. Then runs procedures dependant on if input is a digit or not
+    if ans_1_digit == False:
+        if answer_1 == "hint1":
+            hint_1 = "maximum velocity = A*omega^2, omega = 2*pi*f"
+            print hint_1
+        else:
+            print "Invalid answer. please input number"
+        
+    elif ans_1_digit == True:
+        answer_1 = float(answer_1)
+
+        if answer_1 != 2.51:
+            print "It's wrong answer. Try again."
+            Hint_1 = raw_input(" Would you like the hint? (y/n)").lower()
+            if Hint_1 == "y":
+                hint_1 = "maximum velocity = A*omega^2, omega = 2*pi*f"
+                print hint_1
+            elif Hint_1 != "y" and Hint_1 != "n":
+                print "Please type y or n"
+                Hint_1 = raw_input(" Would you like the hint? y/n)").lower()
+                
+        if answer_1 == 2.51:
+            print "Your answer is", answer_1, "m/s" 
+            print "Correct. Go to the next question"
+
+    
+# user's answer is saved to the dialog "answer.py"    
+answer_save()
+
+
+##print answer_get("user_answer_1")
+
+
+
