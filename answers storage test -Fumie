@@ -1,0 +1,45 @@
+import pickle
+
+# set
+answer_dict = {}
+#global answer_dict 
+global load_check
+
+
+def answer_init():
+    load_check = False
+
+    answer_dict['user_answer_1'] = "0"
+    answer_dict['user_answer_2'] = "0"
+    answer_dict['user_answer_3'] = "0"
+
+    answer_dict['answer_1'] = "2.51Hz"
+    answer_dict['answer_2'] = "a"
+    answer_dict['answer_3'] = "0"
+    pickle.dump(answer_dict, open("quiz_test_results.txt", "wb"))
+
+     
+def answer_load():
+    
+    load_check = True
+    
+    ### -- destroys current entry frame to replace with loaded text
+    answer_dict = pickle.load(open("quiz_test_results.txt", "rb"))
+
+
+def answer_save():
+    pickle.dump(answer_dict, open("quiz_test_results.txt", "wb"))
+    
+#key = "user_answer_1" or "answer_1"
+def answer_set(key, ans):
+    answer_dict[key] = ans
+##    print answer_dict[key]
+##    print ans
+##    print key
+def answer_get(key):
+    return answer_dict[key]
+
+ 
+
+    
+        
