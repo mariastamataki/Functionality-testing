@@ -1,0 +1,40 @@
+#Quiz 2
+#import answer.py 
+from answer import *
+answer_init()
+
+answer_load()
+
+#The question sentence2 and alternatives are shown up.
+print "Determine the period of ocsillation of a simple pendulum of length 9.81m,given g = 9.81m/s^2"
+print "Choose ansewer from a, b, c, d"
+print  "a = 6.28Hz"
+print  "b = 0.455Hz"
+print  "c = 17.96Hz"
+print  "d = 0.056Hz"
+    
+#set the answer_2
+answer_2 = 0
+
+#User enters the answer
+while answer_2 != "a":
+    answer_2 = raw_input("Enter your answer : ").lower()
+    answer_set("user_answer_2", answer_2)
+
+#The answer is checked
+    if answer_2 == "a":
+        print "Correct. Go to the next page ans check your achievement."
+    elif answer_2 == "hint2":
+        print "T = 2pi/omega = 2pi(L/omega)**1/2)"
+    else:
+        print  "It's wrong. Try it again."
+        print  "if you want to check the hint, enter 'hint2'. "
+
+# user's answer is saved to the dialog "answer.py"    
+answer_save()
+
+#print answer_get("user_answer_2")
+##f = open("quiz_test_results.txt", "r")
+##for x in f:
+##    print x
+##f.close()
